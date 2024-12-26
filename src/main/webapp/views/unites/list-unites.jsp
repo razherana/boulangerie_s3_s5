@@ -152,6 +152,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
@@ -159,6 +160,7 @@
                     <tr>
                         <td><%= unite.getId() %></td>
                         <td><%= unite.getNom() %></td>
+                        <td><a href="delete.uniteController?idUnite=<%= unite.getId() %>">Supprimer</a></td>
                     </tr>
                 <% } %>
             </tbody>
