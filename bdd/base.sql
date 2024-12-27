@@ -12,11 +12,10 @@ CREATE TABLE Vente_Produit (
 );
 
 CREATE TABLE Stock_matierePremiere (
-    idMatierePremiere SERIAL,
-    quantite DECIMAL(10, 2) NOT NULL DEFAULT 0,
-    nom VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idMatierePremiere),
+    idMatierePremiere SERIAL PRIMARY KEY,
     idUnite INT NOT NULL REFERENCES Vente_Unite (idUnite)
+    nom VARCHAR(50) NOT NULL,
+    quantite DECIMAL(10, 2) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Stock_Mouvement_matierePremiere (
@@ -31,12 +30,16 @@ CREATE TABLE Stock_Mouvement_matierePremiere (
 
 CREATE TABLE Prod_Recette (
     idRecette SERIAL PRIMARY KEY,
-    idProduit INT,
-    idMatierePremiere INT,
-    quantite decimal(10, 2),
-    nbrPersonne INT,
-    FOREIGN KEY (idProduit) REFERENCES Vente_Produit (idProduit),
-    FOREIGN KEY (idMatierePremiere) REFERENCES Stock_matierePremiere (idMatierePremiere)
+    nom VARCHAR(50) NOT NULL,
+    idProduit INT REFERENCES Vente_Produit(idProduit),
+    nbrPersonne INT DEFAULT 1
+);
+
+CREATE TABLE Prod_Recette_Ligne (
+    idRecetteLigne SERIAL PRIMARY KEY
+    idRecette INT REFERENCES Prod_Recette (idRecette),
+    idMatierePremiere INT REFERENCES Stock_matierePremiere (idMatierePremiere),
+    quantite DECIMAL(10, 2) NOT NULL
 );
 
 create table Vente_PrixProduit (
