@@ -1,8 +1,8 @@
 package main.java.models.vente;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Vente_client")
 public class Client extends DaoHerana {

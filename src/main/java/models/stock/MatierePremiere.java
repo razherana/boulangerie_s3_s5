@@ -1,8 +1,8 @@
 package main.java.models.stock;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Stock_matierePremiere")
 public class MatierePremiere extends DaoHerana {

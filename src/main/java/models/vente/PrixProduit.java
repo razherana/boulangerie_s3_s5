@@ -2,9 +2,9 @@ package main.java.models.vente;
 
 import java.sql.Timestamp;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Vente_PrixProduit")
 public class PrixProduit extends DaoHerana {

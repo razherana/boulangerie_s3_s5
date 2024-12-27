@@ -3,9 +3,9 @@ package main.java.models.vente;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Vente_Unite")
 public class Unite extends DaoHerana {

@@ -39,7 +39,7 @@ public class UniteController extends MereController {
         if (connection != null)
             connection.close();
 
-        this.list();
+        response.sendRedirect("list.uniteController");
     }
 
     @CtrlAnnotation(name = "delete")
@@ -78,5 +78,6 @@ public class UniteController extends MereController {
                     "list.uniteController?error=" + e.getClass().getSimpleName() + " : " + e.getMessage());
             return;
         }
+        response.sendRedirect("list.uniteController");
     }
 }

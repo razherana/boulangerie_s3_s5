@@ -1,8 +1,8 @@
 package main.java.models.production;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Prod_Recette")
 public class Recette extends DaoHerana {

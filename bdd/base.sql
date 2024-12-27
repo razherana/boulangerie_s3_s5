@@ -33,10 +33,11 @@ CREATE TABLE Stock_Mouvement_matierePremiere (
 );
 
 CREATE TABLE Prod_Recette (
+    idRecette SERIAL PRIMARY KEY,
     idProduit INT,
     idMatierePremiere INT,
     quantite decimal(10, 2),
-    PRIMARY KEY (idProduit, idMatierePremiere),
+    nbrPersonne INT,
     FOREIGN KEY (idProduit) REFERENCES Vente_Produit (idProduit),
     FOREIGN KEY (idMatierePremiere) REFERENCES Stock_matierePremiere (idMatierePremiere)
 );

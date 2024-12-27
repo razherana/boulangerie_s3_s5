@@ -3,9 +3,9 @@ package main.java.models.stock;
 import java.sql.Timestamp;
 import java.util.Map;
 
-import mg.daoherana.DaoHerana;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
+import mg.daoherana.DaoHerana;
 
 @Table(name = "Stock_Mouvement_produit")
 public class MouvProduit extends DaoHerana {
