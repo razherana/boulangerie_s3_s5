@@ -1,6 +1,3 @@
-/*
-GESTION DE VENTE ET DE PRODUCTION
-*/
 
 CREATE TABLE Vente_Unite (
     idUnite SERIAL,
@@ -16,7 +13,7 @@ CREATE TABLE Vente_Produit (
 
 CREATE TABLE Stock_matierePremiere (
     idMatierePremiere SERIAL,
-    quantite DECIMAL(10, 2) NOT NULL,
+    quantite DECIMAL(10, 2) NOT NULL DEFAULT 0,
     nom VARCHAR(50) NOT NULL,
     PRIMARY KEY (idMatierePremiere),
     idUnite INT NOT NULL REFERENCES Vente_Unite (idUnite)
