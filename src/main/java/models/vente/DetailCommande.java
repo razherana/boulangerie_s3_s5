@@ -1,12 +1,16 @@
 package main.java.models.vente;
 
+import java.sql.Connection;
 import java.sql.Timestamp;
 
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
 import mg.daoherana.DaoHerana;
+import mg.daoherana.relations.BelongsTo;
 
 @Table(name = "Vente_detailsCommande")
+@BelongsTo(model = Commande.class, parentKeyGetter = "getCommande", foreignKeyGetter = "getId", relationName = "commande")
+@BelongsTo(model = Produit.class, parentKeyGetter = "getProduit", foreignKeyGetter = "getId", relationName = "produit")
 public class DetailCommande extends DaoHerana {
   @Column(isPK = true, name = "idDetailsCommande")
   private int id;
@@ -42,4 +46,9 @@ public class DetailCommande extends DaoHerana {
   public Timestamp getDate() { return date; }
 
   public void setDate(Timestamp date) { this.date = date; }
+
+  public Commande getCommande(Connection connection) { return belongsTo("commande", connection); }
+
+  public Produit getProduit(Connection connection) { return belongsTo("produit", connection); }
+
 }
