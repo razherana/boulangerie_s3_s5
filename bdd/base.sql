@@ -108,3 +108,57 @@ CREATE TABLE Personnal_Employe (
     idPoste int references Personnal_Poste (idPoste),
     taux_horaire decimal(10, 2)
 );
+
+
+
+-- Vue pour gérer le reste de chaque matière première sans COALESCE
+CREATE VIEW Vue_Reste_MatierePremiere AS
+SELECT 
+    mp.idMatierePremiere,
+    mp.nom AS nom_matiere_premiere,
+    mp.quantite AS quantite_initiale,
+    SUM(CASE 
+        WHEN mmp.status = 'Entrée' THEN mmp.quantite 
+        WHEN mmp.status = 'Sortie' THEN -mmp.quantite 
+        ELSE 0 END) AS mouvement_total,
+    (mp.quantite + 
+     SUM(CASE 
+        WHEN mmp.status = 'Entrée' THEN mmp.quantite 
+        WHEN mmp.status = 'Sortie' THEN -mmp.quantite 
+        ELSE 0 END)) AS quantite_restante
+FROM 
+    Stock_matierePremiere mp
+LEFT JOIN 
+    Stock_Mouvement_matierePremiere mmp 
+ON 
+    mp.idMatierePremiere = mmp.idMatierePremiere
+GROUP BY 
+    mp.idMatierePremiere, mp.nom, mp.quantite;
+
+-- Vue pour gérer le reste de chaque produit sans COALESCE
+CREATE VIEW Vue_Reste_Produit AS
+SELECT 
+    p.idProduit,
+    p.nom AS nom_produit,
+    SUM(CASE 
+        WHEN mp.status = 'Entrée' THEN mp.quantite 
+        WHEN mp.status = 'Sortie' THEN -mp.quantite 
+        ELSE 0 END) AS mouvement_total,
+    SUM(CASE 
+        WHEN mp.status = 'Entrée' THEN mp.quantite 
+        ELSE 0 END) AS total_entree,
+    SUM(CASE 
+        WHEN mp.status = 'Sortie' THEN mp.quantite 
+        ELSE 0 END) AS total_sortie,
+    (SUM(CASE 
+        WHEN mp.status = 'Entrée' THEN mp.quantite 
+        WHEN mp.status = 'Sortie' THEN -mp.quantite 
+        ELSE 0 END)) AS quantite_restante
+FROM 
+    Vente_Produit p
+LEFT JOIN 
+    Stock_Mouvement_produit mp 
+ON 
+    p.idProduit = mp.idProduit
+GROUP BY 
+    p.idProduit, p.nom;
