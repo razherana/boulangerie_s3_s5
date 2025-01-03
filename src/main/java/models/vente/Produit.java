@@ -4,6 +4,7 @@ import mg.daoherana.DaoHerana;
 import mg.daoherana.relations.HasMany;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,4 +36,14 @@ public class Produit extends DaoHerana {
   public Optional<Recette> getRecette(String nomRecette, Connection connection) {
     return getRecettes(connection).stream().filter((e) -> e.getNom().equals(nomRecette)).findAny();
   }
+
+  public PrixProduit getPrixProduit(Timestamp date , Connection connection) {
+      PrixProduit prix = new PrixProduit();
+      List<Object>  list = prix.read("WHERE idProduit  =" + getId() +" and Date_ajout <= '"+ date+"' order by date_ajout desc limit 1", connection);
+        for (Object obj : list) {
+          prix  = (PrixProduit) obj;
+        }
+      return prix;
+  }
+
 }

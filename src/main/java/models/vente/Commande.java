@@ -21,6 +21,16 @@ public class Commande extends DaoHerana {
   @Column(name = "isSaled")
   private boolean saled;
 
+  private double total;
+
+  public double getTotal() {
+    return total;
+  }
+
+  public void setTotal(double total) {
+    this.total = total;
+  }
+
   public int getId() { return id; }
 
   public void setId(int id) { this.id = id; }
@@ -59,5 +69,30 @@ public class Commande extends DaoHerana {
     }
 
     return commandes.toArray(new DetailCommande[]{});
+  }
+  public Commande findById(Connection conn) throws Exception {
+    String sql = "select * from vente_commande where idcommande = ?";
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    pstmt.setInt(1, this.getId());
+    ResultSet rs = pstmt.executeQuery();
+    if (rs.next()) {
+      Commande commande = new Commande();
+      commande.setId(rs.getInt("idDetailsCommande"));
+      commande.setClient(rs.getInt("idclient"));
+      commande.setSaled(rs.getBoolean("isSaled"));
+      return commande;
+    }
+    return null;
+  }
+
+  public double getAddition (Connection conn) throws Exception {
+    total = 0;
+    if(getCommandes(conn)== null){
+      return total;
+    }
+    for (DetailCommande detailCommande: getCommandes(conn)) {
+      total += detailCommande.getQuantite()* detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(),conn).getPrix();
+    }
+    return total;
   }
 }
