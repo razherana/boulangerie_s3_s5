@@ -1,11 +1,11 @@
 ## date : 03  janvier 2025
      - test :
-        -  Class : produit.
-        - methode : getTecettes(connection)
+        (ok)-  Class : produit.
+        (ok)- methode : getTecettes(connection)
                 -> erreur :  Cannot invoke "mg.dao.annotation.Table.name()" because "colonne" is null
         -
      -  a faire :
-        - verification DAO : rectification erreur.
+        (ok) - verification DAO : rectification erreur.
         - creation de toutes relations entre les entites via foreing key
              - utilisation hasmany , belongsto
              - entites a relier :
