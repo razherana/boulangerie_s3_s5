@@ -170,9 +170,9 @@ GROUP BY
 
 
 create table stock_PrixMatierePremiere(
-                                          idPrixMatierePremiere int primary key,
-                                          idMatiere int REFERENCES stock_matierepremiere (idMatierePremiere),
-                                          prix decimal(10, 2),
-                                          date_ajout timestamp
+    idPrixMatierePremiere int primary key,
+    idMatiere int REFERENCES stock_matierepremiere (idMatierePremiere),
+    prix decimal(10, 2),
+    date_ajout timestamp
 );
 
