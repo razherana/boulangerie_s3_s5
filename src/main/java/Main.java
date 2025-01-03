@@ -26,14 +26,14 @@ public class Main {
       commande = (Commande) object;
     }
     DetailCommande[] detailCommandes =  commande.getCommandes(connection);
-    for (DetailCommande detailCommande: detailCommandes) {
-      Produit produit = detailCommande.getProduit(connection);
-      System.out.println(detailCommande.getCommande()+"-"+produit.getNom()+"-"+detailCommande.getQuantite()+"-"+detailCommande.getDate());
-      PrixProduit prixProduit = produit.getPrixProduit(detailCommande.getDate(),connection);
-      System.out.println("price : " + prixProduit.getPrix());
-    }
+//    for (DetailCommande detailCommande: detailCommandes) {
+//      Produit produit = detailCommande.getProduit(connection);
+//      System.out.println(detailCommande.getCommande()+"-"+produit.getNom()+"-"+detailCommande.getQuantite()+"-"+detailCommande.getDate());
+//      PrixProduit prixProduit = produit.getPrixProduit(detailCommande.getDate(),connection);
+//      System.out.println("price : " + prixProduit.getPrix());
+//    }
 
-    System.out.println("Client n "+commande.getClient()+"  Total Addition: "+ commande.getAddition(connection));
+//    System.out.println("Client n "+commande.getClient()+"  Total Addition: "+ commande.getAddition(connection));
 
     /*GESTION DE MATIERES PREMIERES */
     for (DetailCommande detailCommande: detailCommandes) {

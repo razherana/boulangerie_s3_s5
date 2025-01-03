@@ -30,7 +30,11 @@ public class Produit extends DaoHerana {
   public String getNom() { return nom; }
 
   public void setNom(String nom) { this.nom = nom; }
-
+/*
+* misy probleme kely ito methode ito :
+*  Cannot invoke "mg.dao.annotation.Table.name()" because "colonne" is null
+* tokony verifier na kely
+* */
   public List<Recette> getRecettes(Connection connection) { return hasMany("recette", connection); }
 
   public Optional<Recette> getRecette(String nomRecette, Connection connection) {
