@@ -11,7 +11,7 @@
              - entites a relier :
                 - Produit , PrixProduit , mouvProduit , recettes , recetteLigne, matiere premieres , mouvMatierePremeres
                 commande , client , details Commande
-        - calcul du prix de revient de chaque produit.
+        (ok) - calcul du prix de revient de chaque produit.
         - calcul du prix de revient dune commande
         - calcul du benefice par produit
         - calcul du benefice par commande.
