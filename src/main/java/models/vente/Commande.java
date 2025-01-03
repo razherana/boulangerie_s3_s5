@@ -60,4 +60,18 @@ public class Commande extends DaoHerana {
 
     return commandes.toArray(new DetailCommande[]{});
   }
+  public Commande findById(Connection conn) throws Exception {
+    String sql = "select * from vente_commande where idcommande = ?";
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    pstmt.setInt(1, this.getId());
+    ResultSet rs = pstmt.executeQuery();
+    if (rs.next()) {
+      Commande commande = new Commande();
+      commande.setId(rs.getInt("idDetailsCommande"));
+      commande.setClient(rs.getInt("idclient"));
+      commande.setSaled(rs.getBoolean("isSaled"));
+      return commande;
+    }
+    return null;
+  }
 }
