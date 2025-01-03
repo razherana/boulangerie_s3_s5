@@ -6,8 +6,6 @@ import mg.daoherana.relations.BelongsTo;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import main.java.models.production.Recette;
 import mg.dao.annotation.Column;

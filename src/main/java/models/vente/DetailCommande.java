@@ -7,10 +7,12 @@ import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
 import mg.daoherana.DaoHerana;
 import mg.daoherana.relations.BelongsTo;
+import mg.daoherana.relations.EagerLoad;
 
 @Table(name = "Vente_detailsCommande")
 @BelongsTo(model = Commande.class, parentKeyGetter = "getCommande", foreignKeyGetter = "getId", relationName = "commande")
 @BelongsTo(model = Produit.class, parentKeyGetter = "getProduit", foreignKeyGetter = "getId", relationName = "produit")
+@EagerLoad({"produit"})
 public class DetailCommande extends DaoHerana {
   @Column(isPK = true, name = "idDetailsCommande")
   private int id;
