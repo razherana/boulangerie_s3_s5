@@ -6,6 +6,8 @@ import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
 
 import java.sql.*;
+import java.util.List;
+import java.util.Map;
 
 @Table(name = "Vente_commande")
 @HasMany(model = DetailCommande.class, parentKeyGetter = "getId", foreignKeyGetter = "getCommande", relationName = "detailcommande")
@@ -43,10 +45,23 @@ public class Commande extends DaoHerana {
 
   public double getAddition(Connection conn) throws Exception {
     total = 0;
+    Commande example = new Commande();
+    example.setMapLoads(Map.ofEntries(Map.entry(Produit.class.getName(), List.of("prixProduit"))));
     for (DetailCommande detailCommande : getDetailCommandes(conn)) {
       total += detailCommande.getQuantite()
           * detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(), conn).getPrix();
     }
     return total;
+  }
+
+  public double prixRevient(Connection connection) {
+    Commande example = new Commande();
+    example.setMapLoads(Map.ofEntries(Map.entry(Produit.class.getName(), List.of("recette"))));
+    double prix = 0;
+    for (DetailCommande detailCommande : example.getDetailCommandes(connection)) {
+      prix += detailCommande.getProduit(connection).getPrixRevient(detailCommande.getDate(), connection)
+          * detailCommande.getQuantite();
+    }
+    return prix;
   }
 }
