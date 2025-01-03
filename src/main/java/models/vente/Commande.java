@@ -21,6 +21,16 @@ public class Commande extends DaoHerana {
   @Column(name = "isSaled")
   private boolean saled;
 
+  private double total;
+
+  public double getTotal() {
+    return total;
+  }
+
+  public void setTotal(double total) {
+    this.total = total;
+  }
+
   public int getId() { return id; }
 
   public void setId(int id) { this.id = id; }
@@ -73,5 +83,16 @@ public class Commande extends DaoHerana {
       return commande;
     }
     return null;
+  }
+
+  public double getAddition (Connection conn) throws Exception {
+    total = 0;
+    if(getCommandes(conn)== null){
+      return total;
+    }
+    for (DetailCommande detailCommande: getCommandes(conn)) {
+      total += detailCommande.getQuantite()* detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(),conn).getPrix();
+    }
+    return total;
   }
 }
