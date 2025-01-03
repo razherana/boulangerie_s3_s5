@@ -13,7 +13,7 @@ CREATE TABLE Vente_Produit (
 
 CREATE TABLE Stock_matierePremiere (
     idMatierePremiere SERIAL PRIMARY KEY,
-    idUnite INT NOT NULL REFERENCES Vente_Unite (idUnite)
+    idUnite INT NOT NULL REFERENCES Vente_Unite (idUnite),
     nom VARCHAR(50) NOT NULL,
     quantite DECIMAL(10, 2) NOT NULL DEFAULT 0
 );
@@ -36,7 +36,7 @@ CREATE TABLE Prod_Recette (
 );
 
 CREATE TABLE Prod_Recette_Ligne (
-    idRecetteLigne SERIAL PRIMARY KEY
+    idRecetteLigne SERIAL PRIMARY KEY,
     idRecette INT REFERENCES Prod_Recette (idRecette),
     idMatierePremiere INT REFERENCES Stock_matierePremiere (idMatierePremiere),
     quantite DECIMAL(10, 2) NOT NULL
@@ -112,7 +112,7 @@ CREATE TABLE Personnal_Employe (
 
 
 -- Vue pour gérer le reste de chaque matière première sans COALESCE
-CREATE VIEW Vue_Reste_MatierePremiere AS
+CREATE OR REPLACE VIEW Vue_Reste_MatierePremiere AS
 SELECT 
     mp.idMatierePremiere,
     mp.nom AS nom_matiere_premiere,
@@ -136,7 +136,7 @@ GROUP BY
     mp.idMatierePremiere, mp.nom, mp.quantite;
 
 -- Vue pour gérer le reste de chaque produit sans COALESCE
-CREATE VIEW Vue_Reste_Produit AS
+CREATE OR REPLACE VIEW Vue_Reste_Produit AS
 SELECT 
     p.idProduit,
     p.nom AS nom_produit,

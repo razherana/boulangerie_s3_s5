@@ -4,10 +4,12 @@ import java.sql.Connection;
 
 import main.java.models.stock.MatierePremiere;
 import mg.dao.annotation.Column;
+import mg.dao.annotation.Table;
 import mg.daoherana.DaoHerana;
 import mg.daoherana.relations.BelongsTo;
 import mg.daoherana.relations.EagerLoad;
 
+@Table(name = "Prod_Recette_Ligne")
 @BelongsTo(model = Recette.class, parentKeyGetter = "getRecette", foreignKeyGetter = "getId", relationName = "recette")
 @BelongsTo(model = MatierePremiere.class, parentKeyGetter = "getMatierePremiere", foreignKeyGetter = "getId", relationName = "matierePremiere")
 @EagerLoad({ "matierePremiere" })
