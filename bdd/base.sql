@@ -113,52 +113,66 @@ CREATE TABLE Personnal_Employe (
 
 -- Vue pour gérer le reste de chaque matière première sans COALESCE
 CREATE OR REPLACE VIEW Vue_Reste_MatierePremiere AS
-SELECT 
+SELECT
     mp.idMatierePremiere,
     mp.nom AS nom_matiere_premiere,
     mp.quantite AS quantite_initiale,
-    SUM(CASE 
-        WHEN mmp.status = 'Entrée' THEN mmp.quantite 
-        WHEN mmp.status = 'Sortie' THEN -mmp.quantite 
+    SUM(CASE
+        WHEN mmp.status = 'Entrée' THEN mmp.quantite
+        WHEN mmp.status = 'Sortie' THEN -mmp.quantite
         ELSE 0 END) AS mouvement_total,
-    (mp.quantite + 
-     SUM(CASE 
-        WHEN mmp.status = 'Entrée' THEN mmp.quantite 
-        WHEN mmp.status = 'Sortie' THEN -mmp.quantite 
+    (mp.quantite +
+     SUM(CASE
+        WHEN mmp.status = 'Entrée' THEN mmp.quantite
+        WHEN mmp.status = 'Sortie' THEN -mmp.quantite
         ELSE 0 END)) AS quantite_restante
-FROM 
+FROM
     Stock_matierePremiere mp
-LEFT JOIN 
-    Stock_Mouvement_matierePremiere mmp 
-ON 
+LEFT JOIN
+    Stock_Mouvement_matierePremiere mmp
+ON
     mp.idMatierePremiere = mmp.idMatierePremiere
-GROUP BY 
+GROUP BY
     mp.idMatierePremiere, mp.nom, mp.quantite;
 
 -- Vue pour gérer le reste de chaque produit sans COALESCE
 CREATE OR REPLACE VIEW Vue_Reste_Produit AS
-SELECT 
+SELECT
     p.idProduit,
     p.nom AS nom_produit,
-    SUM(CASE 
-        WHEN mp.status = 'Entrée' THEN mp.quantite 
-        WHEN mp.status = 'Sortie' THEN -mp.quantite 
+    SUM(CASE
+        WHEN mp.status = 'Entrée' THEN mp.quantite
+        WHEN mp.status = 'Sortie' THEN -mp.quantite
         ELSE 0 END) AS mouvement_total,
-    SUM(CASE 
-        WHEN mp.status = 'Entrée' THEN mp.quantite 
+    SUM(CASE
+        WHEN mp.status = 'Entrée' THEN mp.quantite
         ELSE 0 END) AS total_entree,
-    SUM(CASE 
-        WHEN mp.status = 'Sortie' THEN mp.quantite 
+    SUM(CASE
+        WHEN mp.status = 'Sortie' THEN mp.quantite
         ELSE 0 END) AS total_sortie,
-    (SUM(CASE 
-        WHEN mp.status = 'Entrée' THEN mp.quantite 
-        WHEN mp.status = 'Sortie' THEN -mp.quantite 
+    (SUM(CASE
+        WHEN mp.status = 'Entrée' THEN mp.quantite
+        WHEN mp.status = 'Sortie' THEN -mp.quantite
         ELSE 0 END)) AS quantite_restante
-FROM 
+FROM
     Vente_Produit p
-LEFT JOIN 
-    Stock_Mouvement_produit mp 
-ON 
+LEFT JOIN
+    Stock_Mouvement_produit mp
+ON
     p.idProduit = mp.idProduit
-GROUP BY 
+GROUP BY
     p.idProduit, p.nom;
+
+
+/*
+    add : 03 01 2025
+*/
+
+
+create table stock_PrixMatierePremiere(
+                                          idPrixMatierePremiere int primary key,
+                                          idMatiere int REFERENCES stock_matierepremiere (idMatierePremiere),
+                                          prix decimal(10, 2),
+                                          date_ajout timestamp
+);
+
