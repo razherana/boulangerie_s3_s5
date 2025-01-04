@@ -63,4 +63,8 @@ public class Produit extends DaoHerana {
     }
     return prix;
   }
+
+  public double getBenefice(Timestamp date, Connection connection) {
+    return getPrixProduit(date, connection).getPrix() - getPrixRevient(date, connection);
+  }
 }

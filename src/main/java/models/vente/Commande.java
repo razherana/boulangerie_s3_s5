@@ -43,11 +43,11 @@ public class Commande extends DaoHerana {
     return hasMany("detailcommande", conn).toArray(new DetailCommande[0]);
   }
 
-  public double getAddition(Connection conn) throws Exception {
+  public double getAddition(Connection conn) {
     total = 0;
     Commande example = new Commande();
     example.setMapLoads(Map.ofEntries(Map.entry(Produit.class.getName(), List.of("prixProduit"))));
-    for (DetailCommande detailCommande : getDetailCommandes(conn)) {
+    for (DetailCommande detailCommande : example.getDetailCommandes(conn)) {
       total += detailCommande.getQuantite()
           * detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(), conn).getPrix();
     }
@@ -63,5 +63,9 @@ public class Commande extends DaoHerana {
           * detailCommande.getQuantite();
     }
     return prix;
+  }
+
+  public double benefice(Connection connection) {
+    return getAddition(connection) - prixRevient(connection);
   }
 }

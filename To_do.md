@@ -12,9 +12,9 @@
                 - Produit , PrixProduit , mouvProduit , recettes , recetteLigne, matiere premieres , mouvMatierePremeres
                 commande , client , details Commande
         (ok) - calcul du prix de revient de chaque produit.
-        - calcul du prix de revient dune commande
-        - calcul du benefice par produit
-        - calcul du benefice par commande.
+        (ok) - calcul du prix de revient dune commande
+        (ok) - calcul du benefice par produit
+        (ok) - calcul du benefice par commande.
         - verification du  reste de matiere premiere avant chaque commande
         - verification du  reste de produit avant chaque commande
         - Affichage :

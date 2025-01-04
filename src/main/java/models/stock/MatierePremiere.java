@@ -12,6 +12,7 @@ import java.util.ArrayList;
 @Table(name = "Stock_matierePremiere")
 @BelongsTo(model = Unite.class, parentKeyGetter = "getUnite", foreignKeyGetter = "getId", relationName = "unite")
 @HasMany(model = PrixMatierePremiere.class, parentKeyGetter = "getId", foreignKeyGetter = "getMatierePremiere", relationName = "prixMatierePremiere")
+@HasMany(model = MouvMatierePremiere.class, parentKeyGetter = "getId", foreignKeyGetter = "getMatierePremiere", relationName = "mouvMatierePremiere")
 @EagerLoad({ "prixMatierePremiere" })
 public class MatierePremiere extends DaoHerana {
   @Column(isPK = true, name = "idMatierePremiere")
@@ -61,5 +62,9 @@ public class MatierePremiere extends DaoHerana {
     return getAllPrixMatierePremieres(connection).stream()
         .filter((a) -> a.getDate().before(date) || a.getDate().equals(date))
         .sorted((b, a) -> a.getDate().compareTo(b.getDate())).findFirst().orElse(none);
+  }
+
+  public MouvMatierePremiere[] getMouvMatierePremieres(Connection connection) {
+    return hasMany("mouvMatierePremiere", connection).toArray(new MouvMatierePremiere[0]);
   }
 }

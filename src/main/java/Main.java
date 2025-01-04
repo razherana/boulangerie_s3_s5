@@ -2,11 +2,10 @@ package main.java;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import main.java.connexion.Base;
-import main.java.models.production.Recette;
 import main.java.models.production.RecetteLigne;
 import main.java.models.vente.Commande;
 import main.java.models.vente.DetailCommande;
@@ -19,7 +18,8 @@ public class Main {
 
     /* gestion de commande */
 
-    Commande commande = new Commande().find(1, new String[0], connection);
+    Commande commande = new Commande().find(1, null, connection);
+    commande.setMapLoads(Map.of(DetailCommande.class.getName(), List.of("produit")));
     DetailCommande[] detailCommandes = commande.getDetailCommandes(connection);
     for (DetailCommande detailCommande : detailCommandes) {
       Produit produit = detailCommande.getProduit(connection);
