@@ -9,4 +9,4 @@ public class ChiffreAffaire extends DaoHerana {
   @Column(name = "idChiffresAffaires")
   private int id;
 
-}
+} 
