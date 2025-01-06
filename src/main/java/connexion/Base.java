@@ -5,8 +5,8 @@ import java.sql.*;
 public class Base {
     private static final String database = "boulangerie";
     private static final String username = "postgres";
-    private static final String password = " ";
-    private static final int port = 5435;
+    private static final String password = "postgres";
+    private static final int port = 5432;
 
     public static Connection PsqlConnect() {
         Connection c = null;

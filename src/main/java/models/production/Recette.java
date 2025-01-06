@@ -47,4 +47,5 @@ public class Recette extends DaoHerana {
   public Produit getProduit(Connection connection) { return belongsTo("produit", connection); }
 
   public ArrayList<RecetteLigne> getRecetteLigne(Connection connection) { return hasMany("recetteLigne", connection); }
+
 }
