@@ -1,20 +1,20 @@
 ## date : 03  janvier 2025
      - test :
-        -  Class : produit.
-        - methode : getTecettes(connection)
+        (ok)-  Class : produit.
+        (ok)- methode : getTecettes(connection)
                 -> erreur :  Cannot invoke "mg.dao.annotation.Table.name()" because "colonne" is null
         -
      -  a faire :
-        - verification DAO : rectification erreur.
+        (ok) - verification DAO : rectification erreur.
         - creation de toutes relations entre les entites via foreing key
              - utilisation hasmany , belongsto
              - entites a relier :
                 - Produit , PrixProduit , mouvProduit , recettes , recetteLigne, matiere premieres , mouvMatierePremeres
                 commande , client , details Commande
-        - calcul du prix de revient de chaque produit.
-        - calcul du prix de revient dune commande
-        - calcul du benefice par produit
-        - calcul du benefice par commande.
+        (ok) - calcul du prix de revient de chaque produit.
+        (ok) - calcul du prix de revient dune commande
+        (ok) - calcul du benefice par produit
+        (ok) - calcul du benefice par commande.
         - verification du  reste de matiere premiere avant chaque commande
         - verification du  reste de produit avant chaque commande
         - Affichage :
