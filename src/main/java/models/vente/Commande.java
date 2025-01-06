@@ -85,7 +85,7 @@ public class Commande extends DaoHerana {
     return null;
   }
 
-  public double getAddition (Connection conn) throws Exception {
+  public double getPrixDeRevient(Connection conn) throws Exception {
     total = 0;
     if(getCommandes(conn)== null){
       return total;

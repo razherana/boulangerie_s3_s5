@@ -84,3 +84,17 @@ INSERT INTO Personnal_Employe (nom, idPoste, taux_horaire) VALUES
 ('Andrianina', 1, 5000),
 ('Randria', 2, 5500),
 ('Rakoto', 3, 4000);
+
+INSERT INTO stock_PrixMatierePremiere (idPrixMatierePremiere, idMatiere, prix, date_ajout) VALUES
+                                                                                               (1, 1, 1000, '2024-12-20 09:00:00'), -- Farine : 1000 Ariary/kg
+                                                                                               (2, 2, 3000, '2024-12-21 10:30:00'), -- Lait : 3000 Ariary/litre
+                                                                                               (3, 3, 500, '2024-12-22 11:00:00'), -- Œuf : 500 Ariary/pièce
+                                                                                               (4, 4, 2000, '2024-12-23 14:45:00'); -- Sucre : 2000 Ariary/kg
+
+
+-- Ajout de nouveaux prix après les commandes
+INSERT INTO stock_PrixMatierePremiere (idPrixMatierePremiere, idMatiere, prix, date_ajout) VALUES
+                                                                                               (5, 1, 1100, '2025-01-01 16:00:00'), -- Farine : Augmentation à 1100 Ariary/kg après les commandes
+                                                                                               (6, 2, 3100, '2025-01-01 17:00:00'), -- Lait : Augmentation à 3100 Ariary/litre après les commandes
+                                                                                               (7, 3, 450, '2025-01-02 10:00:00'), -- Œuf : Baisse à 450 Ariary/pièce après les commandes
+                                                                                               (8, 4, 2100, '2025-01-02 12:00:00'); -- Sucre : Augmentation à 2100 Ariary/kg après les commandes
