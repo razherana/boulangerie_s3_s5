@@ -9,14 +9,11 @@ import java.util.Map;
 
 import mg.daoherana.DaoHerana;
 import mg.daoherana.relations.BelongsTo;
-import mg.daoherana.relations.EagerLoad;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
-import mg.dao.utils.Reflect;
 
 @Table(name = "Stock_Mouvement_matierePremiere")
 @BelongsTo(model = MatierePremiere.class, parentKeyGetter = "getMatierePremiere", foreignKeyGetter = "getId", relationName = "matierePremiere")
-@EagerLoad({ "matierePremiere" })
 public class MouvMatierePremiere extends DaoHerana {
 
   @Column(isPK = true, name = "idMouvement")
@@ -40,6 +37,10 @@ public class MouvMatierePremiere extends DaoHerana {
   public void setId(int id) { this.id = id; }
 
   public String getStatus() { return status; }
+
+  public int getStatusInt() { return mapStatusInt.getOrDefault(getStatus(), -1); }
+
+  private static Map<String, Integer> mapStatusInt = Map.of("Entrée", 1, "Sortie", -1);
 
   public void setStatus(String status) { this.status = status; }
 

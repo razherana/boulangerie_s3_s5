@@ -44,7 +44,7 @@ public class MouvProduit extends DaoHerana {
 
   public void setProduit(int produit) { this.produit = produit; }
 
-  private static Map<String, Boolean> mapBaba = Map.of("entree", true, "sortie", false);
+  private static Map<String, Boolean> mapBaba = Map.of("Entrée", true, "Sortie", false);
 
   public boolean getStatusBoolean() { return mapBaba.get(status); }
 }

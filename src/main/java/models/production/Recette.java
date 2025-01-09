@@ -2,6 +2,9 @@ package main.java.models.production;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import main.java.models.vente.Produit;
 import mg.dao.annotation.Column;
@@ -47,4 +50,28 @@ public class Recette extends DaoHerana {
   public Produit getProduit(Connection connection) { return belongsTo("produit", connection); }
 
   public ArrayList<RecetteLigne> getRecetteLigne(Connection connection) { return hasMany("recetteLigne", connection); }
+
+  public int getProduitDispo(Connection connection) {
+    Map<Integer, Double> quantiteNeeded = new HashMap<>(
+        getRecetteLigne(connection).stream().map(e -> Map.entry(e.getMatierePremiere(), e.getQuantite()))
+            .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())));
+
+    Map<Integer, Double> matierePremieres = new HashMap<>(getRecetteLigne(connection).stream()
+        .map(e -> e.getMatierePremiere(connection)).map(e -> Map.entry(e.getId(), e.getQuantite()))
+        .collect(Collectors.toMap((e) -> e.getKey(), e -> e.getValue())));
+
+    var keySet = quantiteNeeded.keySet();
+    HashMap<Integer, Integer> divisionPerElement = new HashMap<>();
+    
+    for (Integer idMatierePremiere : keySet) {
+      int div = (int) (matierePremieres.getOrDefault(idMatierePremiere, 0.0) / quantiteNeeded.get(idMatierePremiere));
+
+      if(div <= 0)
+        return 0;
+      
+      divisionPerElement.put(idMatierePremiere, div);
+    }
+
+    return divisionPerElement.values().stream().sorted((a, b) -> a - b).findFirst().orElse(0);
+  }
 }

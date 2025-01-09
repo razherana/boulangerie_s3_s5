@@ -8,6 +8,7 @@ import main.java.models.vente.Unite;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Table(name = "Stock_matierePremiere")
 @BelongsTo(model = Unite.class, parentKeyGetter = "getUnite", foreignKeyGetter = "getId", relationName = "unite")
@@ -67,4 +68,8 @@ public class MatierePremiere extends DaoHerana {
   public MouvMatierePremiere[] getMouvMatierePremieres(Connection connection) {
     return hasMany("mouvMatierePremiere", connection).toArray(new MouvMatierePremiere[0]);
   }
+
+  public double getReste(Connection connection) {
+    return Arrays.stream(getMouvMatierePremieres(connection)).mapToDouble((e) -> e.getQuantite() * e.getStatusInt()).sum();
+  } 
 }
