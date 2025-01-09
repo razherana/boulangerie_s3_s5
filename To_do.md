@@ -13,11 +13,11 @@
                 commande , client , details Commande
         (ok) - calcul du prix de revient de chaque produit.
         (ok) - calcul du prix de revient dune commande
-        (ok) - calcul du benefice par produit
+        (ok) - calcul du be nefice par produit
         (ok) - calcul du benefice par commande.
         - verification du  reste de matiere premiere avant chaque commande
-        - verification du  reste de produit avant chaque commande
-        - Affichage :
+        - verification  du  reste de produit avant chaque commande
+        - Affichage          :
             - insertion stock produit et matiere premiere
             - insertion de nouveau produit ,  recette ,  matiere premiere , prix produit
             - prise de commande , details commande ,  client ,

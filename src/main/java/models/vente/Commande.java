@@ -1,16 +1,16 @@
 package main.java.models.vente;
 
+import main.java.connexion.Base;
 import mg.daoherana.DaoHerana;
-import mg.daoherana.relations.HasMany;
 import mg.dao.annotation.Column;
 import mg.dao.annotation.Table;
 
-import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import java.sql.*;
 
 @Table(name = "Vente_commande")
-@HasMany(model = DetailCommande.class, parentKeyGetter = "getId", foreignKeyGetter = "getCommande", relationName = "detailcommande")
 public class Commande extends DaoHerana {
   @Column(isPK = true, name = "idCommande")
   private int id;
@@ -23,9 +23,13 @@ public class Commande extends DaoHerana {
 
   private double total;
 
-  public double getTotal() { return total; }
+  public double getTotal() {
+    return total;
+  }
 
-  public void setTotal(double total) { this.total = total; }
+  public void setTotal(double total) {
+    this.total = total;
+  }
 
   public int getId() { return id; }
 
@@ -39,33 +43,56 @@ public class Commande extends DaoHerana {
 
   public void setSaled(boolean saled) { this.saled = saled; }
 
-  public DetailCommande[] getDetailCommandes(Connection conn) {
-    return hasMany("detailcommande", conn).toArray(new DetailCommande[0]);
+  public DetailCommande[] getCommandes(Connection conn) throws Exception {
+    int checkConn = 0;
+    if (conn == null) {
+        conn  = Base.PsqlConnect();
+        checkConn = 1;
+    }
+    List<DetailCommande> commandes = new ArrayList<>();
+    String sql = "select * from Vente_detailscommande where idCommande = ?";
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    pstmt.setInt(1, id);
+    ResultSet rs = pstmt.executeQuery();
+    while (rs.next()) {
+      DetailCommande commande  = new DetailCommande();
+      commande.setId(rs.getInt("idDetailsCommande"));
+      commande.setProduit(rs.getInt("idProduit"));
+      commande.setCommande(this.getId());
+      commande.setQuantite( rs.getDouble("quantite"));
+      commande.setDate(rs.getTimestamp("date_ajout"));
+      commandes.add(commande);
+    }
+
+    if (checkConn == 1) {
+      conn.close();
+    }
+
+    return commandes.toArray(new DetailCommande[]{});
+  }
+  public Commande findById(Connection conn) throws Exception {
+    String sql = "select * from vente_commande where idcommande = ?";
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    pstmt.setInt(1, this.getId());
+    ResultSet rs = pstmt.executeQuery();
+    if (rs.next()) {
+      Commande commande = new Commande();
+      commande.setId(rs.getInt("idDetailsCommande"));
+      commande.setClient(rs.getInt("idclient"));
+      commande.setSaled(rs.getBoolean("isSaled"));
+      return commande;
+    }
+    return null;
   }
 
-  public double getAddition(Connection conn) {
+  public double getAddition (Connection conn) throws Exception {
     total = 0;
-    Commande example = new Commande();
-    example.setMapLoads(Map.ofEntries(Map.entry(Produit.class.getName(), List.of("prixProduit"))));
-    for (DetailCommande detailCommande : example.getDetailCommandes(conn)) {
-      total += detailCommande.getQuantite()
-          * detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(), conn).getPrix();
+    if(getCommandes(conn)== null){
+      return total;
+    }
+    for (DetailCommande detailCommande: getCommandes(conn)) {
+      total += detailCommande.getQuantite()* detailCommande.getProduit(conn).getPrixProduit(detailCommande.getDate(),conn).getPrix();
     }
     return total;
-  }
-
-  public double prixRevient(Connection connection) {
-    Commande example = new Commande();
-    example.setMapLoads(Map.ofEntries(Map.entry(Produit.class.getName(), List.of("recette"))));
-    double prix = 0;
-    for (DetailCommande detailCommande : example.getDetailCommandes(connection)) {
-      prix += detailCommande.getProduit(connection).getPrixRevient(detailCommande.getDate(), connection)
-          * detailCommande.getQuantite();
-    }
-    return prix;
-  }
-
-  public double benefice(Connection connection) {
-    return getAddition(connection) - prixRevient(connection);
   }
 }

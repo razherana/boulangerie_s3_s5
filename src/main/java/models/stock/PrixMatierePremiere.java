@@ -10,32 +10,32 @@ import mg.daoherana.relations.BelongsTo;
 @Table(name = "stock_PrixMatierePremiere")
 @BelongsTo(model = MatierePremiere.class, parentKeyGetter = "getMatierePremiere", foreignKeyGetter = "getId", relationName = "matierePremiere")
 public class PrixMatierePremiere extends DaoHerana {
-  @Column(name = "idPrixMatierePremiere", isPK = true)
-  private int id;
+    @Column(name = "idPrixMatierePremiere", isPK = true)
+    private int id;
 
-  @Column(name = "idMatiere")
-  private int matierePremiere;
+    @Column(name = "idMatiere")
+    private int matierePremiere;
 
-  @Column
-  private double prix;
+    @Column
+    private double prix;
 
-  @Column(name = "date_ajout")
-  private Timestamp date;
+    @Column(name = "date_ajout")
+    private Timestamp date;
 
-  public int getId() { return id; }
+    public int getId() { return id; }
 
-  public void setId(int id) { this.id = id; }
+    public void setId(int id) { this.id = id; }
 
-  public int getMatierePremiere() { return matierePremiere; }
+    public int getMatierePremiere() { return matierePremiere; }
 
-  public void setMatierePremiere(int matierePremiere) { this.matierePremiere = matierePremiere; }
+    public void setMatierePremiere(int matierePremiere) { this.matierePremiere = matierePremiere; }
 
-  public double getPrix() { return prix; }
+    public double getPrix() { return prix; }
 
-  public void setPrix(double prix) { this.prix = prix; }
+    public void setPrix(double prix) { this.prix = prix; }
 
-  public Timestamp getDate() { return date; }
+    public Timestamp getDate() { return date; }
 
-  public void setDate(Timestamp date) { this.date = date; }
-  
+    public void setDate(Timestamp date) { this.date = date; }
+
 }
